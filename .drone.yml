@@ -10,14 +10,9 @@ pipeline:
 
   test:
     image: golang:1.10-alpine
-    secrets:
-    - cc_test_reporter_id
     commands:
     - apk add --update --no-cache git
-    - ./dep ensure
-    - ./cc-test-reporter before-build
-    - go test -coverprofile c.out ./...
-    - ./cc-test-reporter after-build
+    - go test
 
   build_ssm_binary:
     image: golang:alpine
