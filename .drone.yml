@@ -8,13 +8,13 @@ pipeline:
     - curl -fsSL -o cc-test-reporter https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
     - chmod +x ./cc-test-reporter
 
-  test:
-    image: golang:1.10-alpine
-    commands:
-    - apk add --update --no-cache git
-    - ./dep ensure
-    - go install
-    - go test
+  # test:
+  #   image: golang:1.10-alpine
+  #   commands:
+  #   - apk add --update --no-cache git
+  #   - ./dep ensure
+  #   - go install
+  #   - go test
 
   build_ssm_binary:
     image: golang:alpine
