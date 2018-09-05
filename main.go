@@ -22,13 +22,13 @@ func initApp() *cli.App {
 			EnvVar: "PLUGIN_REPO_URL,REPO_URL",
 		},
 		cli.StringFlag{
-			Name:   "username,u",
+			Name:   "username,n",
 			Value:  "",
 			Usage:  "Chartmuseum HTTP Basic auth username",
 			EnvVar: "PLUGIN_REPO_USERNAME",
 		},
 		cli.StringFlag{
-			Name:   "password,u",
+			Name:   "password,x",
 			Value:  "",
 			Usage:  "Chartmuseum HTTP Basic auth password",
 			EnvVar: "PLUGIN_REPO_PASSWORD",
