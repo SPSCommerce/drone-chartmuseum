@@ -21,4 +21,7 @@ RUN set -ex \
 COPY ./bin/ssm_get_parameter /bin/ssm_get_parameter
 ADD ./entrypoint.sh /bin/entrypoint.sh
 COPY --from=builder /drone-chartmuseum /bin/drone-chartmuseum
+
+WORKDIR /work
+
 ENTRYPOINT [ "/bin/entrypoint.sh" ]
