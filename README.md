@@ -1,12 +1,10 @@
 # Drone plugin for ChartMuseum
 
-[![Docker Repository on Quay](https://quay.io/repository/honestbee/drone-chartmuseum/status "Docker Repository on Quay")](https://quay.io/repository/honestbee/drone-chartmuseum)
-[![Maintainability](https://api.codeclimate.com/v1/badges/3667089f0bcc8c0f8735/maintainability)](https://codeclimate.com/github/honestbee/drone-chartmuseum/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/3667089f0bcc8c0f8735/test_coverage)](https://codeclimate.com/github/honestbee/drone-chartmuseum/test_coverage)
-
 Drone plugin to package and upload Helm charts to [ChartMuseum](https://github.com/kubernetes-helm/chartmuseum)
 
-When managing Charts for your organisation, you may either choose to put Chart definitions within each project or centralised in a `helm-charts` repository. The official public-charts repo is an example of the latter.
+The SPS Chartmuseum url is (https://chartmuseum.spsapps.net)[https://chartmuseum.spsapps.net] and implemented in git repo (sps-chartmuseum)[https://github.com/SPSCommerce/sps-chartmuseum]
+
+When managing Charts for your organization, you may either choose to put Chart definitions within each project or centralised in a `helm-charts` repository. The official public-charts repo is an example of the latter.
 
 This plugin supports both approaches as well as the ability to detect and process only changes as part of a git repository.
 
@@ -19,8 +17,7 @@ This plugin supports both approaches as well as the ability to detect and proces
   ```YAML
   pipeline:
     chartmuseum-all:
-      image: quay.io/honestbee/drone-chartmuseum
-      repo_url: http://helm-charts.example.com
+      image: spscommerce/plugin-helmchart-publish
       when:
         branch: [master]
   ```
@@ -32,8 +29,7 @@ This plugin supports both approaches as well as the ability to detect and proces
   ```YAML
   pipeline:
     chartmuseum-diff:
-      image: quay.io/honestbee/drone-chartmuseum
-      repo_url: http://helm-charts.example.com
+      image: spscommerce/plugin-helmchart-publish
       previous_commit: ${DRONE_PREV_COMMIT_SHA}
       current_commit: ${DRONE_COMMIT_SHA}
       when:
@@ -45,32 +41,12 @@ This plugin supports both approaches as well as the ability to detect and proces
   ```YAML
   pipeline:
     chartmuseum-single:
-      image: quay.io/honestbee/drone-chartmuseum
-      repo_url: http://helm-charts.example.com
+      image: spscommerce/plugin-helmchart-publish
       chart_path: nginx
       when:
         branch: [master]
   ```
 
-## Authentication
-drone-chartmuseum plugin supports HTTP Basic authentication. The
-
-```YAML
-pipeline:
-  chartmuseum-auth:
-    image: quay.io/honestbee/drone-chartmuseum
-    repo_url: http://helm-charts.example.com
-    chart_path: nginx
-    when:
-      branch: [master]
-    secrets:
-    # drone secrets expose the values as environment variables, therefore the target is important.
-    # http://docs.drone.io/manage-secrets/
-      - source: helm_username
-        target: plugin_repo_username
-      - source: helm_password
-        target: plugin_repo_password
-```
 
 ## Full utilisation details
 
@@ -120,5 +96,4 @@ LOG_LEVEL=debug go test -v ./...
 
 ## To Do
 
-- Support http basic authentication
 - Support chart dependencies

@@ -1,12 +1,12 @@
 pipeline:
-  prepare:
-    image: golang:1.10-alpine
-    commands:
-    - apk add --update --no-cache git curl
-    - curl -fsSL -o dep https://github.com/golang/dep/releases/download/v0.4.1/dep-linux-amd64
-    - chmod +x dep
-    - curl -fsSL -o cc-test-reporter https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
-    - chmod +x ./cc-test-reporter
+  # prepare:
+  #   image: golang:1.10-alpine
+  #   commands:
+  #   - apk add --update --no-cache git curl
+  #   - curl -fsSL -o dep https://github.com/golang/dep/releases/download/v0.4.1/dep-linux-amd64
+  #   - chmod +x dep
+  #   - curl -fsSL -o cc-test-reporter https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+  #   - chmod +x ./cc-test-reporter
 
   # test:
   #   image: golang:1.10-alpine
@@ -28,8 +28,7 @@ pipeline:
 
   docker-build:
     image: spscommerce/plugin-ecr
-    account: 333808835704
-    repo: plugin-chartmuseum
+    repo: 333808835704.dkr.ecr.us-east-1.amazonaws.com/plugin-helmchart-publish
     tags:
       - ${DRONE_TAG}
       - latest
