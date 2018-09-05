@@ -16,17 +16,17 @@ pipeline:
   #   - go install
   #   - go test
 
-  build_ssm_binary:
-    image: golang:alpine
-    commands:
-    - apk add --no-cache git
-    - go get -v github.com/SPSCommerce/go-ssm-get-parameter
-    - cp $GOPATH/bin/go-ssm-get-parameter .
+  docker-build-push:
+    image: spscommerce/plugin-ecr
+    repo: 333808835704.dkr.ecr.us-east-1.amazonaws.com/plugin-helmchart-publish
+    tags:
+      - ${DRONE_COMMIT}
+      - latest
     when:
-      event:
-      - tag
+      event: [ push ]
+      branch: master
 
-  docker-build:
+  docker-build-tag:
     image: spscommerce/plugin-ecr
     repo: 333808835704.dkr.ecr.us-east-1.amazonaws.com/plugin-helmchart-publish
     tags:
