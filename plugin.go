@@ -8,8 +8,8 @@ import (
 	"strings"
 
 	"code.gitea.io/git"
-	cm "github.com/honestbee/drone-chartmuseum/pkg/cmclient"
-	"github.com/honestbee/drone-chartmuseum/pkg/util"
+	cm "github.com/SPSCommerce/drone-chartmuseum/pkg/cmclient"
+	"github.com/SPSCommerce/drone-chartmuseum/pkg/util"
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
 	"k8s.io/helm/pkg/chartutil"
