@@ -22,6 +22,18 @@ func initApp() *cli.App {
 			EnvVar: "PLUGIN_REPO_URL,REPO_URL",
 		},
 		cli.StringFlag{
+			Name:   "username,u",
+			Value:  "",
+			Usage:  "Chartmuseum HTTP Basic auth username",
+			EnvVar: "PLUGIN_REPO_USERNAME",
+		},
+		cli.StringFlag{
+			Name:   "password,u",
+			Value:  "",
+			Usage:  "Chartmuseum HTTP Basic auth password",
+			EnvVar: "PLUGIN_REPO_PASSWORD",
+		},
+		cli.StringFlag{
 			Name:   "chart-path,i",
 			Usage:  "Path to chart, relative to charts-dir",
 			Value:  "",
@@ -74,6 +86,8 @@ func defaultAction(c *cli.Context) error {
 	plugin := Plugin{
 		Config: &Config{
 			RepoURL:          c.String("repo-url"),
+			Username:         c.String("username"),
+			Password:         c.String("password"),
 			ChartsDir:        c.String("charts-dir"),
 			ChartPath:        c.String("chart-path"),
 			PreviousCommitID: c.String("previous-commit"),
