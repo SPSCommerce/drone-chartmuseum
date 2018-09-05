@@ -18,7 +18,7 @@ FROM alpine:3.7
 RUN set -ex \
     && apk add --no-cache bash ca-certificates git
 
-COPY ./go-ssm-get-parameter /bin/ssm_get_parameter
+COPY ./bin/ssm_get_parameter /bin/ssm_get_parameter
 ADD ./entrypoint.sh /bin/entrypoint.sh
 COPY --from=builder /drone-chartmuseum /bin/drone-chartmuseum
 ENTRYPOINT [ "/bin/entrypoint.sh" ]
