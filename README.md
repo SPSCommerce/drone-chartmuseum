@@ -52,6 +52,26 @@ This plugin supports both approaches as well as the ability to detect and proces
         branch: [master]
   ```
 
+## Authentication
+drone-chartmuseum plugin supports HTTP Basic authentication. The
+
+```YAML
+pipeline:
+  chartmuseum-auth:
+    image: quay.io/honestbee/drone-chartmuseum
+    repo_url: http://helm-charts.example.com
+    chart_path: nginx
+    when:
+      branch: [master]
+    secrets:
+    # drone secrets expose the values as environment variables, therefore the target is important.
+    # http://docs.drone.io/manage-secrets/
+      - source: helm_username
+        target: plugin_repo_username
+      - source: helm_password
+        target: plugin_repo_password
+```
+
 ## Full utilisation details
 
 ```bash
@@ -69,6 +89,8 @@ COMMANDS:
 
 GLOBAL OPTIONS:
    --repo-url value, -u value                   ChartMuseum API base URL [$PLUGIN_REPO_URL, $REPO_URL]
+   --username value, -n value                   Chartmuseum HTTP Basic auth username [$PLUGIN_REPO_USERNAME]
+   --password value, -x value                   Chartmuseum HTTP Basic auth password [$PLUGIN_REPO_PASSWORD]
    --chart-path value, -i value                 Path to chart, relative to charts-dir [$PLUGIN_CHART_PATH, $CHART_PATH]
    --charts-dir value, -d value                 chart directory (default: "./") [$PLUGIN_CHARTS_DIR, $CHARTS_DIR]
    --save-dir value, -o value                   Directory to save chart packages (default: "uploads/") [$PLUGIN_SAVE_DIR, $SAVE_DIR]
