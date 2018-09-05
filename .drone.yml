@@ -12,6 +12,7 @@ pipeline:
     image: golang:1.10-alpine
     commands:
     - apk add --update --no-cache git
+    - ./dep ensure
     - go install
     - go test
 
