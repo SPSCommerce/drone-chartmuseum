@@ -12,6 +12,7 @@ pipeline:
     image: golang:1.10-alpine
     commands:
     - apk add --update --no-cache git
+    - go install
     - go test
 
   build_ssm_binary:
