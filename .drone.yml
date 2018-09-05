@@ -1,20 +1,16 @@
-workspace:
-  base: /go
-  path: src/github.com/honestbee/drone-chartmuseum
-
 pipeline:
   prepare:
     image: golang:1.10-alpine
     commands:
     - apk add --update --no-cache git curl
-    - curl -fsSL -o dep https://github.com/golang/dep/releases/download/v0.4.1/dep-linux-amd64 
+    - curl -fsSL -o dep https://github.com/golang/dep/releases/download/v0.4.1/dep-linux-amd64
     - chmod +x dep
     - curl -fsSL -o cc-test-reporter https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
     - chmod +x ./cc-test-reporter
 
   test:
     image: golang:1.10-alpine
-    secrets: 
+    secrets:
     - cc_test_reporter_id
     commands:
     - apk add --update --no-cache git
@@ -23,23 +19,22 @@ pipeline:
     - go test -coverprofile c.out ./...
     - ./cc-test-reporter after-build
 
-  docker-build:
-    image: plugins/docker:17.05
-    repo: quay.io/honestbee/drone-chartmuseum
-    tags: 
-      - ${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:8}
-      - latest
-    registry: quay.io
-    email: "devops@honestbee.com"
-    secrets: [ docker_username, docker_password ]
+  build_ssm_binary:
+    image: golang:alpine
+    commands:
+    - apk add --no-cache git
+    - go get -v github.com/SPSCommerce/go-ssm-get-parameter
+    - cp $GOPATH/bin/go-ssm-get-parameter .
     when:
-      branch: [ master ]
+      event:
+      - tag
 
-  notify:
-    image: plugins/slack
-    channel: feed-devops
-    secrets: 
-      - source: slack_webhook
-        target: plugin_webhook
+  docker-build:
+    image: spscommerce/plugin-ecr
+    account: 333808835704
+    repo: plugin-chartmuseum
+    tags:
+      - ${DRONE_TAG}
+      - latest
     when:
-      status: [ success, failure ]
+      event: [ tag ]
