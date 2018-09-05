@@ -25,7 +25,7 @@ func setup() (client *Client, mux *http.ServeMux, serverURL string, teardown fun
 
 	// client is the ChartMuseum client being tested and is
 	// configured to use test server.
-	client, _ = NewClient(server.URL+"/", nil)
+	client, _ = NewClient(server.URL+"/", nil, "user", "pass")
 	return client, mux, server.URL, server.Close
 }
 

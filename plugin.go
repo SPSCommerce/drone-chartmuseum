@@ -24,6 +24,8 @@ type (
 		ChartPath        string `json:"chart_path,omitempty"`
 		ChartsDir        string `json:"charts_dir,omitempty"`
 		SaveDir          string `json:"save_dir,omitempty"`
+		Username         string `json:"username"`
+		Password         string `json:"password"`
 		PreviousCommitID string `json:"previous_commit_id,omitempty"`
 		CurrentCommitID  string `json:"current_commit_id,omitempty"`
 	}
@@ -49,7 +51,7 @@ type (
 func (p *Plugin) ValidateConfig() error {
 	var err error
 	// validate ChartMuseum baseURL
-	if p.Client, err = cm.NewClient(p.Config.RepoURL, nil); err != nil {
+	if p.Client, err = cm.NewClient(p.Config.RepoURL, nil, p.Config.Username, p.Config.Password); err != nil {
 		return errors.Wrapf(err, "Could not create ChartMuseum client (repo-url: %q)", p.Config.RepoURL)
 	}
 

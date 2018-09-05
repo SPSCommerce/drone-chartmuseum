@@ -48,8 +48,9 @@ type (
 
 // NewClient returns a new ChartMuseum API client with provided base URL
 // If trailing slash is missing from base URL, one is added automatically.
+// If username/password is provided, the base URL includes HTTP Basic auth
 // If a nil httpClient is provided, http.DefaultClient will be used.
-func NewClient(baseURL string, httpClient *http.Client) (*Client, error) {
+func NewClient(baseURL string, httpClient *http.Client, username string, password string) (*Client, error) {
 	if baseURL == "" {
 		return nil, fmt.Errorf("ChartMuseum API - base URL can not be blank")
 	}
@@ -57,6 +58,11 @@ func NewClient(baseURL string, httpClient *http.Client) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	if len(username) > 0 && len(password) > 0 {
+		baseEndpoint.User = url.UserPassword(username, password)
+	}
+
 	if !strings.HasSuffix(baseEndpoint.Path, "/") {
 		baseEndpoint.Path += "/"
 	}
